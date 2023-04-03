@@ -8,9 +8,13 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    //Reference to MainManager - data flow between scenes
+    [SerializeField] private MainManager _mainManager;
+
     //Width & height of game board
-    [SerializeField] private int width = 4;
-    [SerializeField] private int height = 4;
+    [SerializeField] private int width;
+    [SerializeField] private int height;
+    
 
     //References to tile, board and block prefabs
     [SerializeField] private Tile tilePrefab;
@@ -43,6 +47,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _mainManager = GameObject.Find("Main Manager").GetComponent<MainManager>();
+        width = _mainManager.BoardSize;
+        height = _mainManager.BoardSize;
         // Start the game by generating the grid
         ChangeState(GameState.GenerateLevel);
     }
@@ -246,6 +253,7 @@ public class GameManager : MonoBehaviour
     {
         return tiles.FirstOrDefault(n => n.Pos == pos);
     }
+
 }
 
 //Struct representing block type with value & color
@@ -266,3 +274,4 @@ public enum GameState
     Win,
     Lose
 }
+
