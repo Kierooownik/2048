@@ -25,24 +25,21 @@ public class UIManager : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (SceneManager.GetActiveScene().buildIndex == 0) return;
-        _pauseButton.onClick.AddListener(TogglePause);
-    }
-
+    //Start new game, go to game scene from menu
     public void StartNew()
     {
         SceneManager.LoadScene("Game Scene");
     }
 
+    //Restart game in pause menu
     public void RestartGame()
     {
         SceneManager.LoadScene("Game Scene");
         Time.timeScale = 1f;
 
     }
+
+    //Exit game or quit unity editor
     public void ExitGame()
     {
 #if UNITY_EDITOR
@@ -52,27 +49,24 @@ public class UIManager : MonoBehaviour
 #endif
     }
 
+    //Go to main menu from pause menu
     public void GoToMenu()
     {
         SceneManager.LoadScene("Menu");
     }
 
-    public void TogglePause()
+    public void PauseGame()
     {
-        if (!IsPaused)
-        {
-            Time.timeScale = 0f;
-            IsPaused = true;
-            _pauseScreen.SetActive(true);
-            _pauseButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            Time.timeScale = 1f;
-            IsPaused = false;
-            _pauseScreen.SetActive(false);
-            _pauseButton.gameObject.SetActive(true);
-        }
-        
+        Time.timeScale = 0f;
+        IsPaused = true;
+        _pauseScreen.SetActive(true);
+        _pauseButton.gameObject.SetActive(false);
+    }
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1f;
+        IsPaused = false;
+        _pauseScreen.SetActive(false);
+        _pauseButton.gameObject.SetActive(true);
     }
 }
